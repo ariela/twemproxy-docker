@@ -1,0 +1,28 @@
+memcached:
+  listen: 0.0.0.0:11211
+  hash: fnv1a_64
+  distribution: ketama
+  timeout: 500
+  backlog: 1024
+  tcpkeepalive: true
+  preconnect: true
+  auto_eject_hosts: false
+  server_retry_timeout: 3000
+  server_failure_limit: 3
+  servers:
+   - memcached:11211:1
+
+redis:
+  listen: 0.0.0.0:6379
+  hash: fnv1a_64
+  distribution: ketama
+  timeout: 500
+  backlog: 1024
+  tcpkeepalive: true
+  preconnect: true
+  redis: true
+  auto_eject_hosts: false
+  server_retry_timeout: 3000
+  server_failure_limit: 3
+  servers:
+   - redis:6379:1

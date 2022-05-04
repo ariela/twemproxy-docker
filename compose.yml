@@ -1,0 +1,29 @@
+name: twemproxy-docker-sample
+services:
+  memcached:
+    image: memcached:1.5.16
+  redis:
+    image: redis:4.0.10
+  twemproxy:
+    image: twemproxy
+    ports:
+    - mode: ingress
+      target: 6379
+      published: "6379"
+      protocol: tcp
+    - mode: ingress
+      target: 11211
+      published: "11211"
+      protocol: tcp
+    configs:
+    - source: twemproxy_config
+      target: /usr/local/twemproxy/etc/nutcracker.yml
+    depends_on:
+      memcached:
+        condition: service_started
+      redis:
+        condition: service_started
+configs:
+  twemproxy_config:
+    name: tmp_twemproxy_config
+    file: ./nutcracker.yml
